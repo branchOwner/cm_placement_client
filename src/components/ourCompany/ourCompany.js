@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useMemo } from "react";
 
 const OurCompany = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-
     const images = useMemo(() => [
         'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/wcl3xh9oo28kn2obdkbt.jpg',
         'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/e9ppj9cks6r2e2yunhfa.jpg',
@@ -14,58 +11,49 @@ const OurCompany = () => {
         'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/e9ppj9cks6r2e2yunhfa.jpg',
         "https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/ujjjktmlmm8pczls1iqe.jpg",
         "https://res.cloudinary.com/dyj4csr44/image/upload/v1739382493/Companies/zkvfa0ohynxby7bklrws.jpg",
+        'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382493/Companies/zkvfa0ohynxby7bklrws.jpg',
+        'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382493/Companies/wvdbg97lpl2vgrattxzj.jpg',
+        'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/wcl3xh9oo28kn2obdkbt.jpg',
+        'https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/e9ppj9cks6r2e2yunhfa.jpg',
+        "https://res.cloudinary.com/dyj4csr44/image/upload/v1739382494/Companies/ujjjktmlmm8pczls1iqe.jpg",
+        "https://res.cloudinary.com/dyj4csr44/image/upload/v1739382493/Companies/zkvfa0ohynxby7bklrws.jpg",
     ], []);
 
-    // **Fade In & Out Animation**
-    const imageVariants = {
-        enter: { opacity: 0 }, // Start transparent
-        center: { opacity: 1, transition: { duration: 1 } }, // Fade in smoothly
-        exit: { opacity: 0, transition: { duration: 1 } }, // Fade out smoothly
-    };
+    
+    const totalColumns = 12;
 
-    // Update images every 3 seconds
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % (images.length - 2)); 
-        }, 3000);
+    // Prepare 12 empty columns
+    const columns = Array.from({ length: totalColumns }, () => []);
 
-        return () => clearInterval(interval);
-    }, [images]);
-
-    const currentImages = [
-        images[currentIndex],
-        images[currentIndex + 1],
-        images[currentIndex + 2],
-    ];
+    // Distribute images into 12 columns evenly
+    images.forEach((image, index) => {
+        columns[index % totalColumns].push(image);
+    });
 
     return (
         <>
-            <h3 className="text-white text-center sm:p-1 md:p-1">Major Companies</h3>
+            <h3 className="text-white text-center sm:p-1 md:p-1 pt-4">Major Companies</h3>
             <section className="pt-4 pb-1">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="carousel-inner d-flex">
-                                <AnimatePresence>
-                                    {currentImages.map((image, index) => (
-                                        <motion.div
-                                            key={image}
-                                            className="col-md-4 mb-1"
-                                            initial="enter"
-                                            animate="center"
-                                            exit="exit"
-                                            variants={imageVariants}
-                                        >
-                                            <img
-                                                className="img-fluid rounded-pill shadow h-24 sm:h-24 md:h-60 lg:h-60 xl:h-60"
-                                                alt={`carousel-${index}`}
-                                                src={image}
-                                            />
-                                        </motion.div>
-                                    ))}
-                                </AnimatePresence>
+                <div className="container-fluid">
+                    <div className="row justify-content-center">
+                        {columns.map((columnImages, colIndex) => (
+                            <div key={colIndex} className="col">
+                                {columnImages.map((image, index) => (
+                                    <div key={index} className="mb-3">
+                                        <img
+                                            src={image}
+                                            alt={`company-${colIndex}-${index}`}
+                                            className="img-fluid rounded-lg"
+                                            style={{
+                                                width: '100%',
+                                                height: '80px',
+                                                objectFit: 'contain'
+                                            }}
+                                        />
+                                    </div>
+                                ))}
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>

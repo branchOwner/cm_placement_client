@@ -17,7 +17,7 @@ const SplitLayout = () => {
     const [jobs, setJobs] = useState([]);
 
     useEffect(() => {
-        fetch(`${config.apiUrl}api/job`)
+        fetch(`${config.apiUrl}api/job`) 
             .then((res) => res.json())
             .then((data) => {
                 console.log("Fetched jobs:", data);
@@ -50,7 +50,7 @@ const SplitLayout = () => {
         }
 
         try {
-            const response = await fetch(`${config.apiUrl}api/cm/apply_job/form`, {
+            const response = await fetch(`${config.apiUrl}api/apply_job/form`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -109,7 +109,7 @@ const SplitLayout = () => {
         }
 
         try {
-            const response = await fetch(`${config.apiUrl}api/cm/company/inquiry`, {
+            const response = await fetch(`${config.apiUrl}api/company/inquiry`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ const SplitLayout = () => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row w-full pt-2 gap-3 min-h-[31rem]">
+        <div className="flex flex-col lg:flex-row w-full pt-2 gap-3 min-h-[31rem] pt-3">
             <div className="text-white flex flex-col w-full p-3 shadow rounded bg-[#3d5561] relative overflow-hidden">
                 <h1 className="mb-2 text-small font-bold dark:text-white md:text-2xl lg:text-2xl">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-500 from-sky-400">Recent Opening</span>
